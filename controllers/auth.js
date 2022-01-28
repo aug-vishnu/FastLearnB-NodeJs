@@ -3,6 +3,7 @@ import { hashPassword, comparePassword } from "../utils/auth";
 import jwt from "jsonwebtoken";
 import { nanoid } from "nanoid";
 import AWS from "aws-sdk";
+import cookie from "cookie";
 
 const awsConfig = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -99,7 +100,18 @@ export const login = async (req, res) => {
       httpOnly: true,
       // secure: true, // only works on https
     });
+    res.setHeader(
+      "Set-Cookie",
+      cookie.serialize("token", token, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7,
+        sameSite: "strict",
+        path: "/",
+      })
+    );
     // send user as json response
+    // usertoken = token;
+    console.log(token);
     res.json(user);
   } catch (err) {
     console.log(err);
