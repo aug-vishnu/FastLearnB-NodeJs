@@ -25,7 +25,7 @@ mongoose
   .catch((err) => console.log("DB CONNECTION ERR => ", err));
 
 // apply middlewares
-app.use(cors());
+app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));

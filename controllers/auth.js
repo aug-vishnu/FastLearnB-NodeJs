@@ -96,23 +96,25 @@ export const login = async (req, res) => {
     // return user and token to client, exclude hashed password
     user.password = undefined;
     // send token in cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      // secure: true, // only works on https
-    });
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   // secure: true, // only works on https
+    // });
     res.setHeader(
       "Set-Cookie",
       cookie.serialize("token", token, {
         httpOnly: true,
         maxAge: 60 * 60 * 24 * 7,
-        sameSite: "strict",
+        sameSite: "none",
         path: "/",
       })
     );
     // send user as json response
     // usertoken = token;
-    console.log(token);
-    res.json(user);
+    res.json({
+      user: user,
+      token: token,
+    });
   } catch (err) {
     console.log(err);
     return res.status(400).send("Error. Try again.");
