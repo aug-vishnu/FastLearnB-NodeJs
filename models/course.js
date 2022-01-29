@@ -20,6 +20,10 @@ const lessonSchema = new mongoose.Schema(
       minlength: 200,
     },
     video: {},
+    url: {},
+    type: {
+      type: String,
+    },
     free_preview: {
       type: Boolean,
       default: false,

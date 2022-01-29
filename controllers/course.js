@@ -216,7 +216,7 @@ export const removeVideo = async (req, res) => {
 export const addLesson = async (req, res) => {
   try {
     const { courseId } = req.params;
-    const { title, content, video } = req.body;
+    const { title, content, video, url, type } = req.body;
     // find post
     const courseFound = await Course.findById(courseId)
       .select("instructor")
@@ -229,7 +229,9 @@ export const addLesson = async (req, res) => {
     let updated = await Course.findByIdAndUpdate(
       courseId,
       {
-        $push: { lessons: { title, content, video, slug: slugify(title) } },
+        $push: {
+          lessons: { title, content, video, url, type, slug: slugify(title) },
+        },
       },
       { new: true }
     )
@@ -390,10 +392,10 @@ export const checkEnrollment = async (req, res) => {
   const user = await User.findById(req.user._id).exec();
   // check if hotel id is found in userOrders array
   let ids = [];
-  if(user.courses && user.courses.length > 0){
+  if (user.courses && user.courses.length > 0) {
     for (let i = 0; i < user.courses.length; i++) {
-        ids.push(user.courses[i].toString());
-      }
+      ids.push(user.courses[i].toString());
+    }
   }
   console.log("USER COURSE IDS => ", ids);
   res.json({
