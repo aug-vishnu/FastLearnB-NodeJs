@@ -25,7 +25,16 @@ mongoose
   .catch((err) => console.log("DB CONNECTION ERR => ", err));
 
 // apply middlewares
-app.use(cors({ credentials: true, origin: "http://127.0.0.1:3000" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      "http://127.0.0.1:3000",
+      "http://localhost:3000",
+      "https://fastlearn.vercel.app/",
+    ],
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));

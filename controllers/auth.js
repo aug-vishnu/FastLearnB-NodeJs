@@ -105,7 +105,8 @@ export const login = async (req, res) => {
       cookie.serialize("token", token, {
         httpOnly: true,
         maxAge: 60 * 60 * 24 * 7,
-        sameSite: "none",
+        sameSite: "strict",
+        // secure: true,
         path: "/",
       })
     );
@@ -134,7 +135,7 @@ export const currentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password").exec();
     console.log("CURRENT_USER", user);
-    return res.json({ ok: true });
+    return res.json({ ok: true, user: user });
   } catch (err) {
     console.log(err);
   }
