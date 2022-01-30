@@ -31,8 +31,8 @@ app.use(
     origin: [
       "http://127.0.0.1:3000",
       "http://localhost:3000",
-      "https://fastlearn.vercel.app/",
-      "https://fastlearn-api.herokuapp.com/",
+      "https://fastlearn.vercel.app",
+      "https://fastlearn-api.herokuapp.com",
     ],
   })
 );
